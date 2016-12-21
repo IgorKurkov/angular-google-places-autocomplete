@@ -133,6 +133,25 @@ angular.module('google.places', [])
 
                     function onBlur(event) {
                         if ($scope.predictions.length === 0) {
+                            console.log('About to do a text search for location');
+                            placesService.textSearch({
+                                query: $scope.query
+                            }, function(places, status) {
+                                console.log('places: ', places);
+                                console.log('status', status);
+                                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                                    $scope.$apply(function() {
+                                        $scope.model = places[0];
+                                        console.log($scope.model);
+                                        $scope.$emit('g-places-autocomplete:select', places[0]);
+                                        $timeout(function() {
+                                            controller.$viewChangeListeners.forEach(function (fn) { fn(); });
+                                        })
+                                    });
+                                } else {
+                                    Promise.reject('Unable to find that address');
+                                }
+                            })
                             return;
                         }
 
