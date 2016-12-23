@@ -63,6 +63,7 @@ angular.module('google.places', [])
                     }());
 
                     function initEvents() {
+                        element.bind('focus', onFocus);
                         element.bind('keydown', onKeydown);
                         element.bind('blur', onBlur);
                         element.bind('submit', onBlur);
@@ -132,7 +133,7 @@ angular.module('google.places', [])
                     }
 
                     function onBlur(event) {
-                        if ($scope.predictions.length === 0) {
+                        if ($scope.predictions.length === 0 && !$scope.model.formatted_address) {
                             placesService.textSearch({
                                 query: $scope.query
                             }, function(places, status) {
@@ -145,7 +146,10 @@ angular.module('google.places', [])
                                         })
                                     });
                                 } else {
-                                    Promise.reject('Unable to find that address');
+                                    console.error('Cannot find that address');
+                                    console.log('element', element);
+                                    $scope.model = {};
+                                    $scope.$emit('g-places-autocomplete:error');
                                 }
                             })
                             return;
@@ -164,9 +168,12 @@ angular.module('google.places', [])
                         });
                     }
 
+                    function onFocus(event) {
+                        $scope.model = {};
+                    }
+
                     function select() {
                         var prediction;
-
                         prediction = $scope.predictions[$scope.selected];
                         if (!prediction) return;
 
