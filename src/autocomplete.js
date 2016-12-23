@@ -143,7 +143,7 @@ angular.module('google.places', [])
                                         $scope.$emit('g-places-autocomplete:select', places[0]);
                                         $timeout(function() {
                                             controller.$viewChangeListeners.forEach(function (fn) { fn(); });
-                                        })
+                                        });
                                     });
                                 } else {
                                     console.error('Cannot find that address');
@@ -151,7 +151,7 @@ angular.module('google.places', [])
                                     $scope.model = {};
                                     $scope.$emit('g-places-autocomplete:error');
                                 }
-                            })
+                            });
                             return;
                         }
 
