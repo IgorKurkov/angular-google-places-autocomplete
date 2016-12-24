@@ -56,6 +56,7 @@ angular.module('google.places', [])
                         $scope.predictions = [];
                         $scope.input = element;
                         $scope.options = $scope.options || {};
+                        $scope.clicked = false;
 
                         initAutocompleteDrawer();
                         initEvents();
@@ -170,6 +171,7 @@ angular.module('google.places', [])
 
                     function onFocus(event) {
                         $scope.model = {};
+                        $scope.clicked = false;
                     }
 
                     function select() {
@@ -257,7 +259,6 @@ angular.module('google.places', [])
                     function clearPredictions() {
                         $scope.active = -1;
                         $scope.selected = -1;
-                        $scope.clicked = false;
                         $scope.predictions = [];
                     }
 
