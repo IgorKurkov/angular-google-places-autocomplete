@@ -82,7 +82,8 @@ angular.module('google.places', [])
                             query: 'query',
                             predictions: 'predictions',
                             active: 'active',
-                            selected: 'selected'
+                            selected: 'selected',
+                            clicked: 'clicked'
                         });
 
                         $drawer = $compile(drawerElement)($scope);
@@ -133,7 +134,7 @@ angular.module('google.places', [])
                     }
 
                     function onBlur(event) {
-                        if ($scope.predictions.length === 0 && !$scope.model.formatted_address) {
+                        if ($scope.predictions.length === 0 && !$scope.model.formatted_address && !$scope.clicked) {
                             placesService.textSearch({
                                 query: $scope.query
                             }, function(places, status) {
@@ -147,7 +148,6 @@ angular.module('google.places', [])
                                     });
                                 } else {
                                     console.error('Cannot find that address');
-                                    console.log('element', element);
                                     $scope.model = {};
                                     $scope.$emit('g-places-autocomplete:error');
                                 }
@@ -257,6 +257,7 @@ angular.module('google.places', [])
                     function clearPredictions() {
                         $scope.active = -1;
                         $scope.selected = -1;
+                        $scope.clicked = false;
                         $scope.predictions = [];
                     }
 
@@ -373,7 +374,8 @@ angular.module('google.places', [])
                 query: '=',
                 predictions: '=',
                 active: '=',
-                selected: '='
+                selected: '=',
+                clicked: '='
             },
             template: TEMPLATE.join(''),
             link: function ($scope, element) {
@@ -400,6 +402,7 @@ angular.module('google.places', [])
                 };
 
                 $scope.selectPrediction = function (index) {
+                    $scope.clicked = true;
                     $scope.selected = index;
                 };
 
