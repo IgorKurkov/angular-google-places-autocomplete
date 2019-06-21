@@ -1,12 +1,15 @@
 {
-  "name": "angular-google-places-autocomplete",
+  "name": "@kurkov87/angular-google-places-autocomplete",
   "version": "0.2.9-1",
   "repository": {
     "type": "git",
-    "url": "http://github.com/kuhnza/angular-google-places-autocomplete.git"
+    "url": "http://github.com/IgorKurkov/angular-google-places-autocomplete.git"
   },
-  "dependencies": {
+  "bugs": {
+    "url": "https://github.com/kuhnza/angular-google-places-autocomplete/issues"
   },
+  "homepage": "https://github.com/ltnetwork/angular-google-places-autocomplete",
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bower-task": "^0.4.0",
